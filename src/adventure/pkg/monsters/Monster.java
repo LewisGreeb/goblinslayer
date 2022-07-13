@@ -1,5 +1,6 @@
 package adventure.pkg.monsters;
 import adventure.pkg.Being;
+import adventure.pkg.Hero;
 
 public abstract class Monster extends Being {
 
@@ -7,4 +8,6 @@ public abstract class Monster extends Being {
 
     public String getType() {return type;}
     public void setType(String type) {this.type = type;}
+
+    public abstract int attack(Hero hero);
 }

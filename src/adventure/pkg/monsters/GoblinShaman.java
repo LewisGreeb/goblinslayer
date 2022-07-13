@@ -26,7 +26,7 @@ public class GoblinShaman extends Goblin{
         int dmg = 0;
         int toHit = rand.nextInt(1, 21);   // Roll a d20.
 
-        if(this.getMP() > 0){
+        if(this.getMP() > 4){
             System.out.println("The " + this.getType() + " uses firebolt to attack " + hero.getName() + " for " + toHit + "!");
             // Check success of attack.
             if(toHit > hero.getAC()){

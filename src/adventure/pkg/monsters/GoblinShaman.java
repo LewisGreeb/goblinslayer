@@ -10,13 +10,15 @@ public class GoblinShaman extends Goblin{
 
     public GoblinShaman(){
         super();
+        // Set unique type name and reduce AC from Goblin base.
         this.setType("Goblin Shaman");
         this.setAC(9);
-        this.setMP(10);
-    }
 
-    public int getMP() {return MP;}
-    public void setMP(int MP) {this.MP = MP;}
+        // Set a semi-random value for MP.
+        Random rand = new Random();
+        // Base 8 for two fire bolts, potential for up to two more.
+        this.MP = (8 + rand.nextInt(1, 9));
+    }
 
     @Override
     public int attack(Hero hero) {
@@ -26,7 +28,8 @@ public class GoblinShaman extends Goblin{
         int dmg = 0;
         int toHit = rand.nextInt(1, 21);   // Roll a d20.
 
-        if(this.getMP() > 4){
+        // Use magic if available.
+        if(this.MP > 4){
             System.out.println("The " + this.getType() + " uses firebolt to attack " + hero.getName() + " for " + toHit + "!");
             // Check success of attack.
             if(toHit > hero.getDefence()){
@@ -40,7 +43,7 @@ public class GoblinShaman extends Goblin{
                 System.out.println("The " + this.getType() + " misses!");
             }
             // Consume MP for casting spells.
-            this.setMP(this.getMP()-4);
+            this.MP -= 4;
         }else{
             System.out.println("The " + this.getType() + " attacks " + hero.getName() + " with their dagger for " + toHit + "!");
             if(toHit == 20){
@@ -58,7 +61,7 @@ public class GoblinShaman extends Goblin{
                 System.out.println("The " + this.getType() + " misses!");
             }
         }
-
+        // Return damage.
         return dmg;
     }
 }

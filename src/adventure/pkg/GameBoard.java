@@ -106,7 +106,7 @@ public class GameBoard {
                 // Rest is interrupted.
                 System.out.println(hero.getName() + "'s camp is attacked!");
                 // Add more enemies to current zone, as if they're arriving while you rest.
-                this.currentZone.setEnemies(getEnemies());
+                this.currentZone.setEnemies(getLowLevelEnemies(4));
                 // Trigger combat.
                 boolean success = combatEncounter(scanner, hero);
                 // If you survive, ask if they want to try to rest again.
@@ -235,8 +235,18 @@ public class GameBoard {
     }
 
     private Zone generateZone(int x, int y){
-        // Select a random number of random enemies.
-        ArrayList<Monster> zoneEnemies = getEnemies();
+        // Initialise monster array.
+        ArrayList<Monster> zoneEnemies;
+
+        // Get enemies based on zone placement.
+        if (x <= 5 && y <= 5){
+            // Select a random number of low level enemies.
+            zoneEnemies = getLowLevelEnemies(3);
+        }else{
+            // Select a random number of high and low tier enemies.
+            zoneEnemies = new ArrayList<>(getLowLevelEnemies(3));
+            zoneEnemies.addAll(getHighLevelEnemies(2));
+        }
 
         // Instantiate new zone.
         Zone newZone = new Zone(x, y, zoneEnemies, "");
@@ -248,22 +258,39 @@ public class GameBoard {
         return newZone;
     }
 
-    private ArrayList<Monster> getEnemies(){
+    private ArrayList<Monster> getLowLevelEnemies(int maxNumOfEnemies){
         // Get number of enemies.
         Random rand = new Random();
-        int enemyCount = rand.nextInt(3);
+        int enemyCount = rand.nextInt(maxNumOfEnemies);
 
         // Var to temporarily hold current enemy to add.
-        Monster en = null;
+        Monster en;
         // Select a random number of random enemies.
         ArrayList<Monster> zoneEnemies = new ArrayList<>();
         for (int i = 0; i < enemyCount; i++){
-            int rnd = rand.nextInt(2);
-            if(rnd == 0){
+            int rnd = rand.nextInt(3);
+            if(rnd <= 1){
                 en = new Goblin();
-            }else if(rnd == 1){
+            }else {
                 en = new GoblinShaman();
             }
+            zoneEnemies.add(en);
+        }
+
+        return zoneEnemies;
+    }
+
+    private ArrayList<Monster> getHighLevelEnemies(int maxNumOfEnemies){
+        // Get number of enemies.
+        Random rand = new Random();
+        int enemyCount = rand.nextInt(maxNumOfEnemies);
+
+        // Var to temporarily hold current enemy to add.
+        Monster en;
+        // Select a random number of random enemies.
+        ArrayList<Monster> zoneEnemies = new ArrayList<>();
+        for (int i = 0; i < enemyCount; i++){
+            en = new Hobgoblin();   // Currently removed for loop as the only high level enemy is hobs.
             zoneEnemies.add(en);
         }
 

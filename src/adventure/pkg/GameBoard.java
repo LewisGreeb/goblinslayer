@@ -78,13 +78,8 @@ public class GameBoard {
             }else if(lInput.contains("flee") && fight){
                 // Denote valid response.
                 valid = true;
-                // Make the current zone the last zone visited before current.
-                this.currentZone = this.zoneHistory.get(this.zoneHistory.size()-2);
-                // Provide feedback to player.
-                System.out.println("You flee back the way you came.");
-                System.out.println(" ");
                 // Set success flag.
-                success = true;
+                success = fleeCombat();
             }
 
             // If no valid action was detected.
@@ -159,6 +154,16 @@ public class GameBoard {
         return true;
     }
 
+    private boolean fleeCombat(){
+        // Make the current zone the last zone visited before current.
+        this.currentZone = this.zoneHistory.get(this.zoneHistory.size()-2);
+        // Provide feedback to player.
+        System.out.println("You flee back the way you came.");
+        System.out.println(" ");
+        // Set success flag.
+        return true;
+    }
+
     private boolean combatEncounter(Scanner scanner, Hero hero){
         // Guide player.
         System.out.println(" ");
@@ -193,34 +198,56 @@ public class GameBoard {
             do{
                 System.out.println("Which enemy do you want to attack?");
                 String enemy = scanner.nextLine();
-                try{
-                    iEnemy = Integer.parseInt(enemy);
-                    iEnemy -= 1;
+                if (enemy.contains("check")){
+                    // Print stats.
+                    hero.statCheck();
+                    // Loop for input again.
+                    validTarget = false;
+                }else if(enemy.contains("flee")){
+                    // Random 1/2 chance to successfully flee mid-combat.
+                    int coin = rand.nextInt(2);
+                    if(coin == 0){
+                        return fleeCombat();   // Flee successfully.
+                    }else{
+                        System.out.println("Your way is blocked by the enemy!");
+                    }
+                    // Set target to -1 to denote unsuccessful attempt to flee.
+                    iEnemy = -1;
+                    // Escape loop.
                     validTarget = true;
-                }catch(Exception ex){
-                    // Catch if not a number.
-                    System.out.println("Invalid entry - Enter a number with a corresponding enemy.");
-                    validTarget = false;
-                }
-                if (iEnemy >= this.currentZone.getEnemies().size()){
-                    // Catch number with no corresponding enemy.
-                    System.out.println("Invalid entry - Enter a number with a corresponding enemy.");
-                    validTarget = false;
+                }else{
+                    try{
+                        iEnemy = Integer.parseInt(enemy);
+                        iEnemy -= 1;
+                        validTarget = true;
+                    }catch(Exception ex){
+                        // Catch if not a number.
+                        System.out.println("Invalid entry - Enter a number. (no spaces or other characters)");
+                        validTarget = false;
+                    }
+                    if (iEnemy >= this.currentZone.getEnemies().size()){
+                        // Catch number with no corresponding enemy.
+                        System.out.println("Invalid entry - Enter a number with a corresponding enemy.");
+                        validTarget = false;
+                    }
                 }
             }while(!validTarget);
 
-            // Selected monster.
-            Monster selectedEnemy = this.currentZone.getEnemies().get(iEnemy);
+            // If the hero didn't unsuccessfully flee.
+            if(iEnemy != -1) {
+                // Selected monster.
+                Monster selectedEnemy = this.currentZone.getEnemies().get(iEnemy);
 
-            // Hero attacks selected enemy.
-            selectedEnemy.setHP(selectedEnemy.getHP()-hero.attack(selectedEnemy));
+                // Hero attacks selected enemy.
+                selectedEnemy.setHP(selectedEnemy.getHP() - hero.attack(selectedEnemy));
 
-            // Determine if the enemy was defeated.
-            if(selectedEnemy.getHP() <= 0){
-                System.out.println("The " + selectedEnemy.getType() + " is defeated!");
-                this.currentZone.getEnemies().remove(iEnemy);
-            }else{
-                this.currentZone.getEnemies().set(iEnemy, selectedEnemy);
+                // Determine if the enemy was defeated.
+                if (selectedEnemy.getHP() <= 0) {
+                    System.out.println("The " + selectedEnemy.getType() + " is defeated!");
+                    this.currentZone.getEnemies().remove(iEnemy);
+                } else {
+                    this.currentZone.getEnemies().set(iEnemy, selectedEnemy);
+                }
             }
 
             // If the enemies aren't dead.

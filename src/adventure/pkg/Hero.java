@@ -70,7 +70,7 @@ public class Hero extends Being{
     }
 
     public void statCheck(){
-        System.out.println(this.name + ": HP - " + this.getHP() + "  AC - " + this.getDefence());
+        System.out.println(this.name + ": HP - " + this.getHP() + "  AC - " + this.getDefence() + "  Lvl - " + this.level);
         System.out.println(" ");
     }
 

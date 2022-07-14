@@ -1,6 +1,5 @@
 package adventure.pkg;
 
-import adventure.pkg.items.*;
 import adventure.pkg.monsters.*;
 
 import java.util.ArrayList;
@@ -47,7 +46,14 @@ public class GameBoard {
             String lInput = input.toLowerCase();
 
             // If player wants to move and is not in a fight.
-            if((lInput.contains("north") || lInput.contains("south") || lInput.contains("east") || lInput.contains("west")) && !fight){
+            if(lInput.contains("help")){
+                // Denote valid response.
+                valid = true;
+                // Print health check.
+                printHelp();
+                // Return success.
+                success = true;
+            }else if((lInput.contains("north") || lInput.contains("south") || lInput.contains("east") || lInput.contains("west")) && !fight){
                 // Denote valid response.
                 valid = true;
                 // Trigger move action.
@@ -57,11 +63,11 @@ public class GameBoard {
                 valid = true;
                 // Trigger rest action.
                 success = camp(scanner, hero);
-            }else if(lInput.contains("health") || lInput.contains("check")){
+            }else if(lInput.contains("check")){
                 // Denote valid response.
                 valid = true;
                 // Print health check.
-                hero.healthCheck();
+                hero.statCheck();
                 // Return success.
                 success = true;
             }else if(lInput.contains("fight") && fight){
@@ -94,6 +100,16 @@ public class GameBoard {
 
         // Return success of action.
         return success;
+    }
+
+    private void printHelp(){
+        System.out.println("~~~ Goblin Slayer Controls ~~~");
+        System.out.println(" ");
+        System.out.println("Input a compass direction to move between zones - north, south, east or west.");
+        System.out.println("To check the health and defence of your character, type 'check'");
+        System.out.println("To heal after battle, type 'rest' or 'camp' - though you might be attacked as you sleep!");
+        System.out.println("Explore and fight goblins to grow stronger - find your way to the exit to win!");
+        System.out.println(" ");
     }
 
     private boolean camp(Scanner scanner, Hero hero){

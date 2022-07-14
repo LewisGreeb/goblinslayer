@@ -24,6 +24,7 @@ public class Zone {
     public int getYCoord() {return yCoord;}
     public void setYCoord(int yCoord) {this.yCoord = yCoord;}
     public ArrayList<Monster> getEnemies() {return enemies;}
+    public void setEnemies(ArrayList<Monster> enemies) {this.enemies = enemies;}
     public String getObstacle() {return obstacle;}
 
 }

@@ -11,6 +11,7 @@ public class Goblin extends Monster {
         this.setHP(7);
         this.setAC(13);
         this.setType("Goblin");
+        this.setXpValue(50);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class Goblin extends Monster {
             System.out.println("Critical hit!");
         }
         // Check success of attack.
-        if(toHit > hero.getAC()){
+        if(toHit > hero.getDefence()){
             // Calculate damage.
             dmg = rand.nextInt(1, 7);
             if(toHit == 20){

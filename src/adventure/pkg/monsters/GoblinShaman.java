@@ -29,7 +29,7 @@ public class GoblinShaman extends Goblin{
         if(this.getMP() > 4){
             System.out.println("The " + this.getType() + " uses firebolt to attack " + hero.getName() + " for " + toHit + "!");
             // Check success of attack.
-            if(toHit > hero.getAC()){
+            if(toHit > hero.getDefence()){
                 // Calculate damage.
                 dmg = rand.nextInt(1, 11);   // d10 for a firebolt.
                 if(toHit == 20){
@@ -47,7 +47,7 @@ public class GoblinShaman extends Goblin{
                 System.out.println("Critical hit!");
             }
             // Check success of attack.
-            if(toHit > hero.getAC()){
+            if(toHit > hero.getDefence()){
                 // Calculate damage.
                 dmg = rand.nextInt(1, 5);   // d4 for a dagger.
                 if(toHit == 20){

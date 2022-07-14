@@ -51,6 +51,18 @@ public class GameBoard {
                 valid = true;
                 // Trigger move action.
                 success = move(lInput);
+            }else if(lInput.contains("rest") || lInput.contains("camp")){
+                // Denote valid response.
+                valid = true;
+                // Trigger rest action.
+                success = camp(scanner, hero);
+            }else if(lInput.contains("health") || lInput.contains("check")){
+                // Denote valid response.
+                valid = true;
+                // Print health check.
+                hero.healthCheck();
+                // Return success.
+                success = true;
             }else if(lInput.contains("fight") && fight){
                 // Denote valid response.
                 valid = true;
@@ -83,6 +95,53 @@ public class GameBoard {
         return success;
     }
 
+    private boolean camp(Scanner scanner, Hero hero){
+        // Random to use as dice.
+        Random rand = new Random();
+        // Boolean to track if the user wants to rest.
+        boolean rest;
+        do{
+            // Determine by chance if rest is interrupted.
+            if(rand.nextInt(6) > 4){
+                // Rest is interrupted.
+                System.out.println(hero.getName() + "'s camp is attacked!");
+                // Add more enemies to current zone, as if they're arriving while you rest.
+                this.currentZone.setEnemies(getEnemies());
+                // Trigger combat.
+                boolean success = combatEncounter(scanner, hero);
+                // If you survive, ask if they want to try to rest again.
+                if(success){
+                    System.out.println("Do you want to try to rest again?");
+                    // Try rest again?
+                    String input = scanner.nextLine();
+                    String lInput = input.toLowerCase();
+                    // Validate input.
+                    while(!lInput.contains("y") && !lInput.contains("n")){
+                        System.out.println("Please enter 'yes' or 'no'.");
+                        input = scanner.nextLine();
+                        lInput = input.toLowerCase();
+                    }
+                    // Set flag from user response.
+                    rest = lInput.contains("y");
+                }else{
+                    // Indicate player death to game loop.
+                    return false;
+                }
+            }else{
+                // Rest is uninterrupted.
+                System.out.println(hero.getName() + " is able to rest.");
+                System.out.println(" ");
+                // HP restored successfully.
+                hero.setHP(hero.getMaxHealth());
+                // Rest successful, break loop.
+                rest = false;
+            }
+        }while(rest);
+
+        // Return success.
+        return true;
+    }
+
     private boolean combatEncounter(Scanner scanner, Hero hero){
         // Guide player.
         System.out.println(" ");
@@ -90,6 +149,12 @@ public class GameBoard {
 
         // Random number generator - dice.
         Random rand = new Random();
+
+        // Get xp gained for this combat.
+        int xpGain = 0;
+        for (Monster en : this.currentZone.getEnemies()){
+            xpGain += en.getXpValue();
+        }
 
         // Enter combat loop.
         do{
@@ -156,17 +221,34 @@ public class GameBoard {
             // Check hero's hp.
             if(hero.getHP() <= 0){
                 System.out.println("You died!");
+                // Return failure.
                 return false;
             }
 
         }while(hero.getHP() > 0 && currentZone.getEnemies().size() > 0);
 
         System.out.println(" ");
-
+        // Add xp gained from this encounter.
+        hero.levelUp(xpGain);
+        // Return success.
         return true;
     }
 
     private Zone generateZone(int x, int y){
+        // Select a random number of random enemies.
+        ArrayList<Monster> zoneEnemies = getEnemies();
+
+        // Instantiate new zone.
+        Zone newZone = new Zone(x, y, zoneEnemies, "");
+
+        // Add new zone to list.
+        this.zoneHistory.add(newZone);
+
+        // Return new zone.
+        return newZone;
+    }
+
+    private ArrayList<Monster> getEnemies(){
         // Get number of enemies.
         Random rand = new Random();
         int enemyCount = rand.nextInt(3);
@@ -185,14 +267,7 @@ public class GameBoard {
             zoneEnemies.add(en);
         }
 
-        // Instantiate new zone.
-        Zone newZone = new Zone(x, y, zoneEnemies, "");
-
-        // Add new zone to list.
-        this.zoneHistory.add(newZone);
-
-        // Return new zone.
-        return newZone;
+        return zoneEnemies;
     }
 
     private boolean move(String direction){
@@ -245,6 +320,7 @@ public class GameBoard {
 
         // Evaluate new position.
         this.compass.evaluatePos(this.currentZone.getXCoord(), this.currentZone.getYCoord(), exit.getXCoord(), exit.getYCoord());
+        System.out.println(" ");
 
         // Return success.
         return true;

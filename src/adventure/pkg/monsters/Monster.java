@@ -1,14 +1,15 @@
 package adventure.pkg.monsters;
 import adventure.pkg.Being;
 import adventure.pkg.Hero;
+import adventure.pkg.items.*;
 
 public abstract class Monster extends Being {
 
     private String type;
     private int xpValue;
 
-    public Monster(int AC, int HP, String type, int xpValue){
-        super(AC, HP);
+    public Monster(int AC, int HP, Weapon weapon, Armour armour, String type, int xpValue){
+        super(AC, HP, weapon, armour);
         this.type = type;
         this.xpValue = xpValue;
     }

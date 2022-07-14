@@ -1,5 +1,7 @@
 package adventure.pkg;
 
+import adventure.pkg.items.Armour;
+import adventure.pkg.items.Weapon;
 import adventure.pkg.monsters.*;
 
 import java.util.Random;
@@ -7,8 +9,7 @@ import java.util.Random;
 public class Hero extends Being{
 
     // Attributes.
-    private String name;
-
+    private final String name;
 
     // Stat attributes.
     private int XP;
@@ -19,10 +20,14 @@ public class Hero extends Being{
     private int atk;
     private int def;
 
+    // Starting weapon and armour.
+    private static final Weapon shortSword = new Weapon("short sword", 1, 1,1);
+    private static final Armour leather = new Armour("leather armour", 1, 2);
+
     // Constructor.
     public Hero(String name){
-        // Set base stats.
-        super(15, 20);
+        // Set base stats and gear.
+        super(13, 20, shortSword, leather);
         // Set name.
         this.name = name;
         // Set leveling attributes.
@@ -34,8 +39,9 @@ public class Hero extends Being{
         this.def = 1;
     }
 
+    @Override
     public int getDefence(){
-        return this.getAC() + this.def;
+        return super.getDefence() + this.def;
     }
 
     public void levelUp(int xp){
@@ -81,13 +87,14 @@ public class Hero extends Being{
         // Report to player.
         System.out.println(this.getName() + " attacks the " + en.getType() + " with their sword for " + toHit + "!");
         // Check success of attack.
-        if(toHit > en.getAC()){
+        if(toHit > en.getDefence()){
             // Calculate damage.
             dmg = rand.nextInt(1, 9);
             if(hitRoll == 20){
                 System.out.println("Critical hit!");
                 dmg *= 2;   // Double damage on crits.
             }
+            dmg += this.getWeapon().getDmgMod() + this.atk;
             System.out.println(this.getName() + " hits the " + en.getType() + " for " + dmg + "!");
         }else{
             System.out.println(this.getName() + " misses!");

@@ -9,4 +9,6 @@ public class Armour extends Item {
         super(name, rarity);
         this.acMod = acMod;
     }
+
+    public int getAcMod() {return acMod;}
 }

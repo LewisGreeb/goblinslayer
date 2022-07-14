@@ -20,12 +20,6 @@ public class Zone {
         this.obstacle = obstacle;
     }
 
-    // Methods.
-    public void setZItem(Item item){
-        this.zItem = item;
-    }
-
-
     // Getters and setters.
     public int getXCoord() {return xCoord;}
     public int getYCoord() {return yCoord;}
@@ -33,5 +27,6 @@ public class Zone {
     public void setEnemies(ArrayList<Monster> enemies) {this.enemies = enemies;}
     public String getObstacle() {return obstacle;}
     public Item getZItem(){return this.zItem;}
+    public void setZItem(Item item){this.zItem = item;}
 
 }

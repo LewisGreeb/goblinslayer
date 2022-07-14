@@ -1,5 +1,6 @@
 package adventure.pkg;
 
+import adventure.pkg.items.*;
 import adventure.pkg.monsters.*;
 
 import java.util.ArrayList;
@@ -257,6 +258,15 @@ public class GameBoard {
         // Return new zone.
         return newZone;
     }
+
+    /*   SETUP INITIAL ITEMS FOR HERO AND ITEMS FOR GOBLINS FIRST
+    public Item randomiseItem(){
+        // Var for new item.
+        Item newItem;
+        // Random num gen to decide item type.
+        Random rand = new Random();
+        //
+    }*/
 
     private ArrayList<Monster> getLowLevelEnemies(int maxNumOfEnemies){
         // Get number of enemies.

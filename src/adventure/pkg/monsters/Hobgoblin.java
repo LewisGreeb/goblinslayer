@@ -6,10 +6,7 @@ import java.util.Random;
 public class Hobgoblin extends Monster{
 
     public Hobgoblin(){
-        this.setHP(15);
-        this.setAC(14);
-        this.setType("Hobgoblin");
-        this.setXpValue(100);
+        super(14, 15, "Hobgoblin", 100);
     }
 
     @Override

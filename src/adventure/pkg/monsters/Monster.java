@@ -7,6 +7,12 @@ public abstract class Monster extends Being {
     private String type;
     private int xpValue;
 
+    public Monster(int AC, int HP, String type, int xpValue){
+        super(AC, HP);
+        this.type = type;
+        this.xpValue = xpValue;
+    }
+
     public String getType() {return type;}
     public void setType(String type) {this.type = type;}
     public int getXpValue() {return xpValue;}

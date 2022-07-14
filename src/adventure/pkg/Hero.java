@@ -21,13 +21,12 @@ public class Hero extends Being{
 
     // Constructor.
     public Hero(String name){
+        // Set base stats.
+        super(15, 20);
         // Set name.
         this.name = name;
-        // Set base stats.
-        this.setHP(20);
-        this.setAC(15);
-        this.maxHealth = 20;
         // Set leveling attributes.
+        this.maxHealth = 20;
         this.XP = 0;
         this.level = 1;
         // Set modifiers.
@@ -99,7 +98,10 @@ public class Hero extends Being{
 
     // Getters and setters.
     public String getName() {return name;}
-    public int getLevel() {return level;}
     public int getMaxHealth() {return maxHealth;}
-
+    public void setMaxHealth(int maxHealth){this.maxHealth = maxHealth;}
+    public void setAtk(int atk) {this.atk = atk;}
+    public int getAtk() {return atk;}
+    public void setDef(int def) {this.def = def;}
+    public int getDef() {return def;}
 }

@@ -6,6 +6,11 @@ public abstract class Being {
     private int AC;
     private int HP;
 
+    public Being(int AC, int HP){
+        this.AC = AC;
+        this.HP = HP;
+    }
+
     // Getters and setters.
     public int getAC() {return AC;}
     public void setAC(int AC) {this.AC = AC;}

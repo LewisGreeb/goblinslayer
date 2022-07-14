@@ -8,10 +8,7 @@ public class Goblin extends Monster {
 
     // Constructor.
     public Goblin(){
-        this.setHP(7);
-        this.setAC(10);
-        this.setType("Goblin");
-        this.setXpValue(50);
+        super(10, 7, "Goblin", 50);
     }
 
     @Override

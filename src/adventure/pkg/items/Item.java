@@ -4,7 +4,7 @@ public abstract class Item {
 
     // Attributes.
     private String name;
-    private int rarity;
+    private final int rarity;
 
     // Constructor.
     public Item(String name, int rarity){
@@ -14,7 +14,4 @@ public abstract class Item {
 
     // Getters and setters.
     public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
-    public int getRarity() {return rarity;}
-    public void setRarity(int rarity) {this.rarity = rarity;}
 }

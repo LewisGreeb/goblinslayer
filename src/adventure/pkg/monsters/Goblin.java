@@ -1,10 +1,7 @@
 package adventure.pkg.monsters;
 
-import adventure.pkg.Hero;
-import adventure.pkg.items.Armour;
-import adventure.pkg.items.Weapon;
+import adventure.pkg.items.*;
 
-import java.util.Random;
 
 public class Goblin extends Monster {
 

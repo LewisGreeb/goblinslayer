@@ -9,15 +9,13 @@ public class Zone {
     private final int xCoord;
     private final int yCoord;
     private ArrayList<Monster> enemies;
-    private String obstacle;
     private Item zItem;
 
     // Constructor.
-    public Zone(int xCoord, int yCoord, ArrayList<Monster> enemies, String obstacle){
+    public Zone(int xCoord, int yCoord, ArrayList<Monster> enemies){
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.enemies = enemies;
-        this.obstacle = obstacle;
         this.zItem = null;
     }
 
@@ -26,7 +24,6 @@ public class Zone {
     public int getYCoord() {return yCoord;}
     public ArrayList<Monster> getEnemies() {return enemies;}
     public void setEnemies(ArrayList<Monster> enemies) {this.enemies = enemies;}
-    public String getObstacle() {return obstacle;}
     public Item getZItem(){return this.zItem;}
     public void setZItem(Item item){this.zItem = item;}
 

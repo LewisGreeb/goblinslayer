@@ -2,7 +2,6 @@ package adventure.pkg.monsters;
 
 import adventure.pkg.items.*;
 
-
 public class GoblinChampion extends Monster{
 
     private static final Weapon warHammer = new Weapon("war hammer", 3, 2,3, 11);

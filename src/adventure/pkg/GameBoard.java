@@ -19,12 +19,12 @@ public class GameBoard {
     public GameBoard(int exitX, int exitY){
         // Initialise start zone.
         ArrayList<Monster> monsters = new ArrayList<>();
-        this.currentZone = new Zone(0,0, monsters, "This is the beginning.");
+        this.currentZone = new Zone(0,0, monsters);
 
         // Initialise end zone.
         GoblinLord goblinLord = new GoblinLord();
         monsters.add(goblinLord);
-        this.exit = new Zone(exitX, exitY, monsters, "");
+        this.exit = new Zone(exitX, exitY, monsters);
 
         // Initialise compass.
         this.compass = new Compass(0,0,exitX,exitY);
@@ -474,7 +474,7 @@ public class GameBoard {
         }
 
         // Instantiate new zone.
-        Zone newZone = new Zone(x, y, zoneEnemies, "");
+        Zone newZone = new Zone(x, y, zoneEnemies);
 
         // Random num gen to decide if zone will have an item.
         Random rand = new Random();

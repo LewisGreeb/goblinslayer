@@ -2,7 +2,6 @@ package adventure.pkg;
 
 import adventure.pkg.items.*;
 
-import java.util.ArrayList;
 
 public abstract class Being {
 

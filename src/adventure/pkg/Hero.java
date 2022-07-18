@@ -143,7 +143,7 @@ public class Hero extends Being{
         // Add modifier.
         int toHit = hitRoll + this.atk;
         // Report to player.
-        System.out.println(this.getName() + " attacks the " + en.getType() + " with their sword for " + toHit + "!");
+        System.out.println(this.getName() + " attacks the " + en.getType() + " with their " + this.getWeapon().getName() + " for " + toHit + "!");
         // Check success of attack.
         if(toHit > en.getDefence()){
             // Calculate damage.

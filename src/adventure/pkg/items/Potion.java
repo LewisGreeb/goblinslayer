@@ -5,7 +5,7 @@ import adventure.pkg.*;
 public class Potion extends Item{
 
     // Potion attributes.
-    private String type;
+    private final String type;
 
     public Potion(String name, int rarity, String type) {
         super(name, rarity);

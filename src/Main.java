@@ -1,5 +1,4 @@
 import adventure.pkg.*;
-import adventure.pkg.monsters.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -11,7 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Control game loop.
-        String cntue = "";
+        String cntue;
 
         // Game loop.
         do{
@@ -44,7 +43,7 @@ public class Main {
 
         // Game tracker variables.
         boolean success;
-        boolean win = false;
+        boolean win;
 
         // Gameplay variables.
         boolean fight = false;
@@ -97,7 +96,7 @@ public class Main {
     public static int randomCoordinate(){
         Random rand = new Random();
         // Set up variable.
-        int coord = 0;
+        int coord;
         // Flip coin.
         int coin = rand.nextInt(2);
         // Generate exit x coordinate.

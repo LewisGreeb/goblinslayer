@@ -3,7 +3,7 @@ package adventure.pkg.items;
 public abstract class Item {
 
     // Attributes.
-    private String name;
+    private final String name;
     private final int rarity;
 
     // Constructor.

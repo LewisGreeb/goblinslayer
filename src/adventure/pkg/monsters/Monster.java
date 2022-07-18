@@ -8,7 +8,7 @@ import java.util.Random;
 public abstract class Monster extends Being {
 
     private String type;
-    private int xpValue;
+    private final int xpValue;
 
     public Monster(int AC, int HP, Weapon weapon, Armour armour, String type, int xpValue){
         super(AC, HP, weapon, armour);
@@ -44,5 +44,5 @@ public abstract class Monster extends Being {
         }
 
         return dmg;
-    };
+    }
 }

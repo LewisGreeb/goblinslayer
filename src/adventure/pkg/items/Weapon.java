@@ -3,9 +3,9 @@ package adventure.pkg.items;
 public class Weapon extends Item{
 
     // Base weapon stat attributes.
-    private int hitMod;
-    private int dmgMod;
-    private int dice;
+    private final int hitMod;
+    private final int dmgMod;
+    private final int dice;
 
     // Constructor.
     public Weapon(String name, int rarity, int hitMod, int dmgMod, int dice){

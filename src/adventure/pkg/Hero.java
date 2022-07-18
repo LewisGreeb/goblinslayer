@@ -27,8 +27,6 @@ public class Hero extends Being{
 
     // Inventory of items.
     private ArrayList<Item> inventory = new ArrayList<>();
-    // Slot for shield as extra armour unique to PC.
-    private Armour shield;
 
     // Constructor.
     public Hero(String name){
@@ -89,7 +87,7 @@ public class Hero extends Being{
             }
             System.out.println(" ");
             // Select item.
-            int iItem = Integer.MAX_VALUE;
+            int iItem;
             boolean valid;
             do{
                 System.out.println("Which item do you want to use?");

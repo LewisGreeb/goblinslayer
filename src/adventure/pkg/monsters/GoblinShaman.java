@@ -8,7 +8,7 @@ import java.util.Random;
 public class GoblinShaman extends Goblin{
 
     private int MP;
-    private static final Weapon dagger = new Weapon("dagger", 1, 1,0);
+    private static final Weapon dagger = new Weapon("dagger", 1, 1,0, 5);
 
 
     public GoblinShaman(){
@@ -51,21 +51,7 @@ public class GoblinShaman extends Goblin{
             // Consume MP for casting spells.
             this.MP -= 4;
         }else{
-            int toHit = hitRoll + this.getWeapon().getHitMod();
-            System.out.println("The " + this.getType() + " attacks " + hero.getName() + " with their " + this.getWeapon().getName() + " for " + toHit + "!");
-            // Check success of attack.
-            if(toHit > hero.getDefence()){
-                // Calculate damage.
-                dmg = rand.nextInt(1, 5);   // d4 for a dagger.
-                if(hitRoll == 20){
-                    System.out.println("Critical hit!");
-                    dmg *= 2;   // Double damage on crits.
-                }
-                dmg += this.getWeapon().getDmgMod();
-                System.out.println("The " + this.getType() + " hits " + hero.getName() + " for " + dmg + "!");
-            }else{
-                System.out.println("The " + this.getType() + " misses!");
-            }
+            return super.attack(hero);
         }
         // Return damage.
         return dmg;

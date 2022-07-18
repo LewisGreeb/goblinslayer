@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Zone {
 
     // Attributes.
-    private int xCoord;
-    private int yCoord;
+    private final int xCoord;
+    private final int yCoord;
     private ArrayList<Monster> enemies;
     private String obstacle;
     private Item zItem;
@@ -18,6 +18,7 @@ public class Zone {
         this.yCoord = yCoord;
         this.enemies = enemies;
         this.obstacle = obstacle;
+        this.zItem = null;
     }
 
     // Getters and setters.

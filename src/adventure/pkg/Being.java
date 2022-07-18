@@ -2,6 +2,8 @@ package adventure.pkg;
 
 import adventure.pkg.items.*;
 
+import java.util.ArrayList;
+
 public abstract class Being {
 
     // Attributes.
@@ -9,6 +11,7 @@ public abstract class Being {
     private int HP;
     private Weapon weapon;
     private Armour armour;
+    private Armour shield;
 
     public Being(int AC, int HP, Weapon weapon, Armour armour){
         this.AC = AC;
@@ -30,4 +33,6 @@ public abstract class Being {
     public void setWeapon(Weapon weapon) {this.weapon = weapon;}
     public Armour getArmour() {return armour;}
     public void setArmour(Armour armour) {this.armour = armour;}
+    public Armour getShield() {return shield;}
+    public void setShield(Armour shield) {this.shield = shield;}
 }

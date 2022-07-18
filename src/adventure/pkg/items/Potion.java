@@ -14,7 +14,10 @@ public class Potion extends Item{
 
     public void use(Hero hero){
         switch(this.type){
-            case "heal" -> hero.setHP(Math.min((hero.getHP() + 5), hero.getMaxHealth()));
+            case "heal" -> {
+                hero.setHP(Math.min((hero.getHP() + 5), hero.getMaxHealth()));
+                System.out.println(hero.getName() + " heals! HP: " + (hero.getHP() - 5) + " -> " + hero.getHP());
+            }
 
             case "atkBoost" -> hero.setAtk(hero.getAtk()+1);
 
@@ -24,6 +27,19 @@ public class Potion extends Item{
                 hero.setMaxHealth(hero.getMaxHealth()+2);
                 hero.setHP(hero.getHP()+2);
             }
+        }
+    }
+
+    public void info(){
+        switch(this.type){
+            case "heal" -> System.out.println("This potion heals you for 5 hit points.");
+
+            case "atkBoost" -> System.out.println("This potion permanently boosts your attack stat by 1.");
+
+            case "defBoost" -> System.out.println("This potion permanently boosts your defence stat by 1.");
+
+            case "hpBoost" -> System.out.println("This potion permanently boosts your health stat by 2.");
+
         }
     }
 

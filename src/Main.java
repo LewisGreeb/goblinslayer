@@ -66,22 +66,26 @@ public class Main {
 
             // Check if current zone has enemies.
             Zone current = board.getCurrentZone();
-            if(current.getEnemies().size() > 0 && success && !win){   // Success var stops message printing when hero is dead.
-                System.out.println(" ");
-                // Player feedback.
-                System.out.println("Some enemies approach!");
-                // Show enemies.
-                StringBuilder enList = new StringBuilder("| ");
-                for (Monster en : current.getEnemies()){
-                    enList.append(en.getType());
-                    enList.append(" | ");
+            if(current.getEnemies().size() > 0 && success){   // Success var stops message printing when hero is dead.
+                if(current.getEnemies().size() == 1 && current.getEnemies().get(0).getType().equals("Nilbog")){
+                    // Deal with Nilbog here.
+                    success = board.riddleMe(scanner, hero, current.getEnemies().get(0));
+                    // Set fight flag to false.
+                    fight = false;
+                    // Print items before next input from player.
+                    board.printItem(current, hero);
+                }else{
+                    // Player feedback.
+                    System.out.println("Some enemies approach!");
+                    // Show enemies.
+                    board.printEnemies(current.getEnemies());
+                    System.out.println(" ");
+                    // Set fight flag to true.
+                    fight = true;
                 }
-                System.out.println(" ");
-                // Display enemies list to player.
-                System.out.println(enList);
-                // Set fight flag to true.
-                fight = true;
             }else{
+                // Deal with item.
+                board.printItem(current, hero);
                 // Set fight flag to false.
                 fight = false;
             }

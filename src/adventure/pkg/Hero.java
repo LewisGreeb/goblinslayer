@@ -1,10 +1,11 @@
 package adventure.pkg;
 
-import adventure.pkg.items.Armour;
-import adventure.pkg.items.Weapon;
+import adventure.pkg.items.*;
 import adventure.pkg.monsters.*;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Hero extends Being{
 
@@ -21,8 +22,13 @@ public class Hero extends Being{
     private int def;
 
     // Starting weapon and armour.
-    private static final Weapon shortSword = new Weapon("short sword", 1, 1,1);
-    private static final Armour leather = new Armour("leather armour", 1, 2);
+    private static final Weapon shortSword = new Weapon("short sword", 1, 1,1, 7);
+    private static final Armour leather = new Armour("leather armour", 1, 1);
+
+    // Inventory of items.
+    private ArrayList<Item> inventory = new ArrayList<>();
+    // Slot for shield as extra armour unique to PC.
+    private Armour shield;
 
     // Constructor.
     public Hero(String name){
@@ -69,6 +75,60 @@ public class Hero extends Being{
         }
     }
 
+    public boolean useItem(Scanner scanner){
+        if(this.inventory.isEmpty()){
+            System.out.println("No items in inventory.");
+            return false;
+        }else{
+            // Display items in inventory.
+            System.out.println("Available items:");
+            System.out.print("| ");
+            for (Item item : this.inventory){
+                System.out.print(item.getName());
+                System.out.print(" | ");
+            }
+            System.out.println(" ");
+            // Select item.
+            int iItem = Integer.MAX_VALUE;
+            boolean valid;
+            do{
+                System.out.println("Which item do you want to use?");
+                String item = scanner.nextLine();
+                try{
+                    iItem = Integer.parseInt(item);
+                    iItem -= 1;
+                    valid = true;
+                    // Check and respond to user input.
+                    if (iItem >= this.inventory.size() || iItem < -1){
+                        // Catch number with no corresponding enemy.
+                        System.out.println("Invalid entry - Enter a number with a corresponding item or 0 to exit.");
+                        // Loop for input again.
+                        valid = false;
+                    }else if(iItem == -1){
+                        System.out.println("Closing inventory.");
+                        System.out.println(" ");
+                        return false;
+                    }else{
+                        // Apply item effect.
+                        ((Potion) this.inventory.get(iItem)).use(this);
+                        System.out.println(this.inventory.get(iItem).getName() + " used!");
+                        // Remove item after use.
+                        this.inventory.remove(iItem);
+                    }
+                }catch(Exception ex){
+                    // Catch if not a number.
+                    System.out.println("Invalid entry - Enter a number. (no spaces or other characters)");
+                    // Loop for input again.
+                    valid = false;
+                }
+
+            }while(!valid);
+            // Space for aesthetics.
+            System.out.println(" ");
+            return true;
+        }
+    }
+
     public void statCheck(){
         System.out.println(this.name + ": HP - " + this.getHP() + "  AC - " + this.getDefence() + "  Lvl - " + this.level);
         System.out.println(" ");
@@ -89,7 +149,7 @@ public class Hero extends Being{
         // Check success of attack.
         if(toHit > en.getDefence()){
             // Calculate damage.
-            dmg = rand.nextInt(1, 9);
+            dmg = rand.nextInt(1, this.getWeapon().getDice());
             if(hitRoll == 20){
                 System.out.println("Critical hit!");
                 dmg *= 2;   // Double damage on crits.
@@ -111,4 +171,6 @@ public class Hero extends Being{
     public int getAtk() {return atk;}
     public void setDef(int def) {this.def = def;}
     public int getDef() {return def;}
+    public ArrayList<Item> getInventory() {return inventory;}
+    public void setInventory(ArrayList<Item> inventory) {this.inventory = inventory;}
 }

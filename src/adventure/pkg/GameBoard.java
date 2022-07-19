@@ -18,13 +18,14 @@ public class GameBoard {
     // Constructor.
     public GameBoard(int exitX, int exitY){
         // Initialise start zone.
-        ArrayList<Monster> monsters = new ArrayList<>();
-        this.currentZone = new Zone(0,0, monsters);
+        ArrayList<Monster> empty = new ArrayList<>();
+        this.currentZone = new Zone(0,0, empty);
 
         // Initialise end zone.
         GoblinLord goblinLord = new GoblinLord();
-        monsters.add(goblinLord);
-        this.exit = new Zone(exitX, exitY, monsters);
+        ArrayList<Monster> monster = new ArrayList<>();
+        monster.add(goblinLord);
+        this.exit = new Zone(exitX, exitY, monster);
 
         // Initialise compass.
         this.compass = new Compass(0,0,exitX,exitY);
@@ -422,6 +423,23 @@ public class GameBoard {
                     System.out.println(hero.getName() + " got the right answer!");
                     System.out.println(hero.getName() + " gains " + nilbog.getXpValue() + " xp!");
                     System.out.println(" ");
+
+                    // Random chance to add high level item to zone.
+                    Random rand = new Random();
+                    int switcher = rand.nextInt(9);
+                    Item newItem = null;
+                    // Randomly select item. 50% chance for an item to be selected.
+                    switch(switcher){
+                        case 0 -> newItem = new Weapon("chain whip", 3, 3, 3, 13);
+                        case 1 -> newItem = new Weapon("magical longsword", 3, 3, 3, 13);
+                        case 2 -> newItem = new Armour("plate armour", 3, 3);
+                        case 3 -> newItem = new Armour("magic shield", 3, 3);
+                    }
+                    // Add random high level item when it exists.
+                    if(newItem != null){
+                        this.currentZone.setZItem(newItem);
+                    }
+
                     // Remove nilbog from zone.
                     this.currentZone.getEnemies().remove(0);
                     // Add xp gained from this encounter.

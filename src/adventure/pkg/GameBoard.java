@@ -515,8 +515,8 @@ public class GameBoard {
         Monster en;
 
         // Select one random special enemy.
-        int rnd = rand.nextInt(3);
-        if(rnd <= 1){
+        int rnd = rand.nextInt(2);
+        if(rnd == 1){
             en = new GoblinChampion();
         }else {
             en = new Nilbog();
